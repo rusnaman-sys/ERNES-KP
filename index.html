@@ -101,6 +101,7 @@ body{background:#c8c8c8;font-family:'Times New Roman',serif;font-size:10pt;color
 .sig-bot{font-size:9.5pt;line-height:1.8;border-top:1px solid #000;margin-top:8px;padding-top:7px;position:relative}
 .stamp{position:absolute;right:143px;top:-30px;width:178px;height:auto;transform:rotate(-7deg);opacity:.88;pointer-events:none;z-index:5}
 .stamp-hide{display:none!important}
+@page{size:A4;margin:0}
 @media print{
   body{background:#fff}
   .toolbar,.sidebar{display:none!important}
@@ -190,6 +191,13 @@ body{background:#c8c8c8;font-family:'Times New Roman',serif;font-size:10pt;color
 <div class="ep">
   <div class="ep-hdr">📋 Условия</div>
   <div class="ep-body">
+    <div class="ep-field"><label>Валюта КП</label>
+      <select onchange="applyCurrency(this.value)" id="ep-cur">
+        <option value="KZT">Тенге ₸</option>
+        <option value="USD">Доллар $</option>
+        <option value="EUR">Евро €</option>
+      </select>
+    </div>
     <div class="ep-field"><label>Курс $ (тенге)</label><input type="text" data-bind="rate" value="470"></div>
     <div style="font:11px Arial,sans-serif;margin-bottom:4px;color:#333">Условия оплаты:</div>
     <div class="pay-mode">
@@ -240,7 +248,7 @@ body{background:#c8c8c8;font-family:'Times New Roman',serif;font-size:10pt;color
     <div class="h1-logo"><img src="data:image/png;base64,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" alt="ERNES"></div>
     <div class="h1-text">
       <div class="name">ERNES INDUSTRIAL POWER SYSTEMS</div>
-      <div class="addr">Алматы, 050018, ул. Жангельдина д. 126, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0960676f66496c7b676c7a276273">[email&#160;protected]</a><br>Нур-Султан, ул. Е. Брусиловского д. 17/3, офис 810, <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="dfbaadb1baacf1beacabbeb1be9fb8b2beb6b3f1bcb0b2">[email&#160;protected]</a></div>
+      <div class="addr">Алматы, 050018, ул. Жангельдина д. 126, info@ernes.kz</div>
     </div>
   </div>
 
@@ -294,8 +302,8 @@ body{background:#c8c8c8;font-family:'Times New Roman',serif;font-size:10pt;color
         <th class="cn">№</th>
         <th style="text-align:left">Наименование товаров</th>
         <th class="cq">К-во</th>
-        <th class="cp">Стоимость за 1 шт. Тенге</th>
-        <th class="ct" style="color:#000;font-weight:700">Общая Стоимость тенге вкл. НДС 16% г.Алматы</th>
+        <th class="cp">Стоимость за 1 шт. <span class="cur-cap">Тенге</span></th>
+        <th class="ct" style="color:#000;font-weight:700">Общая Стоимость <span class="cur-w">тенге</span> вкл. НДС 16% г.Алматы</th>
         <th style="width:20px;border:none;background:transparent"></th>
       </tr>
     </thead>
@@ -324,12 +332,12 @@ body{background:#c8c8c8;font-family:'Times New Roman',serif;font-size:10pt;color
 
   <div class="h2">
     <div class="name">ERNES INDUSTRIAL POWER SYSTEMS</div>
-    <div class="addr">Алматы, 050018, ул. Жангельдина д. 126 | <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="acc5c2cac3ecc9dec2c9df82c7d6">[email&#160;protected]</a> | Нур-Султан: ул. Е. Брусиловского д. 17/3, офис 810</div>
+    <div class="addr">Алматы, 050018, ул. Жангельдина д. 126 | info@ernes.kz</div>
   </div>
 
   <div class="cs">
     <div class="cs-h">Условия оплаты:</div>
-    <div class="cs-b">Цена указано в Тенге по курсу Нац Банка Р.К курс Дол 1$=<span class="f" contenteditable="true" data-bind="rate" data-ph="470">470</span>KZT. При изменение курса на боле или мене на 5% стороны имеют право пересмотреть свои цены.</div>
+    <div class="cs-b">Цена указано в <span class="cur-cap">Тенге</span> по курсу Нац Банка Р.К курс Дол 1$=<span class="f" contenteditable="true" data-bind="rate" data-ph="470">470</span>KZT. При изменение курса на боле или мене на 5% стороны имеют право пересмотреть свои цены.</div>
     <div style="margin-top:5px">
       <div class="pay-sw">
         <button class="act" id="d-b-full"  onclick="swPay('full')">100% предоплата</button>
@@ -338,13 +346,13 @@ body{background:#c8c8c8;font-family:'Times New Roman',serif;font-size:10pt;color
       </div>
     </div>
     <div class="pay-blk on" id="d-full">
-      <div class="cs-b">• <b>100% предоплата</b> — <span class="f calc" id="d-tot2"></span> тенге в течение
+      <div class="cs-b">• <b>100% предоплата</b> — <span class="f calc" id="d-tot2"></span> <span class="cur-w">тенге</span> в течение
         <span class="f" contenteditable="true" data-bind="pdays" data-ph="5">5</span> банковских дней с даты подписания КП.</div>
     </div>
     <div class="pay-blk" id="d-parts">
-      <div class="cs-b">• <b>Предоплата <span class="f calc" id="d-pp">50</span>%</b> — <span class="f calc" id="d-pp-sum"></span> тенге в течение
+      <div class="cs-b">• <b>Предоплата <span class="f calc" id="d-pp">50</span>%</b> — <span class="f calc" id="d-pp-sum"></span> <span class="cur-w">тенге</span> в течение
         <span class="f" contenteditable="true" data-bind="ppdays" data-ph="5">5</span> рабочих дней.<br>
-        • <b>Остаток <span class="f calc" id="d-pr">50</span>%</b> — <span class="f calc" id="d-pr-sum"></span> тенге в течение
+        • <b>Остаток <span class="f calc" id="d-pr">50</span>%</b> — <span class="f calc" id="d-pr-sum"></span> <span class="cur-w">тенге</span> в течение
         <span class="f" contenteditable="true" data-bind="prdays" data-ph="5">5</span> рабочих дней после поставки.</div>
     </div>
     <div class="pay-blk" id="d-sched">
@@ -388,7 +396,7 @@ body{background:#c8c8c8;font-family:'Times New Roman',serif;font-size:10pt;color
     <b>ТОО «ERNES INDUSTRIAL POWER SYSTEMS»</b><br>
     Моб: <span class="f" contenteditable="true" data-bind="mmob" data-ph="+7 701 ..."></span><br>
     Email: <span class="f" contenteditable="true" data-bind="memail" data-ph="email@ernes.kz"></span>
-    &nbsp;|&nbsp; <a href="/cdn-cgi/l/email-protection#650c0b030a2500170b00164b0e1f" style="color:#1155cc"><span class="__cf_email__" data-cfemail="8be2e5ede4cbeef9e5eef8a5e0f1">[email&#160;protected]</span></a>
+    &nbsp;|&nbsp; <a href="mailto:info@ernes.kz" style="color:#1155cc">info@ernes.kz</a>
   </div>
 
 </div>
@@ -501,7 +509,22 @@ function numS(s){
   var n = parseFloat(s.toString().replace(/[^0-9.,]/g,'').replace(',','.'));
   return isNaN(n) ? 0 : n;
 }
-function fmtN(n){ return n ? Math.round(n).toLocaleString('ru') + ' \u20B8' : ''; }
+var CURRENCIES = {
+  KZT: { sym: '\u20B8', word: 'тенге', cap: 'Тенге' },
+  USD: { sym: '$',      word: 'долл. США', cap: 'Долл. США' },
+  EUR: { sym: '\u20AC', word: 'евро',  cap: 'Евро' }
+};
+var CUR = CURRENCIES.KZT;
+
+function applyCurrency(code){
+  CUR = CURRENCIES[code] || CURRENCIES.KZT;
+  var sel = g('ep-cur'); if(sel) sel.value = code;
+  document.querySelectorAll('.cur-w').forEach(function(e){ e.textContent = CUR.word; });
+  document.querySelectorAll('.cur-cap').forEach(function(e){ e.textContent = CUR.cap; });
+  calcTot();
+}
+
+function fmtN(n){ return n ? Math.round(n).toLocaleString('ru') + ' ' + CUR.sym : ''; }
 
 // Спецификация
 function calcTot(){
@@ -648,12 +671,12 @@ function renderSched(tot){
   var rem   = Math.max(0, (tot||0) - pre);
   var per   = n ? Math.round(rem/n) : 0;
   var html  = '';
-  if(pre>0) html += '<p style="font-size:9.5pt;line-height:1.7;padding-left:8px">\u2022 <b>\u041f\u0440\u0435\u0434\u043e\u043f\u043b\u0430\u0442\u0430</b> \u2014 <b>' + fmtN(pre) + '</b> \u0442\u0435\u043d\u0433\u0435 \u0441 \u0434\u0430\u0442\u044b \u043f\u043e\u0434\u043f\u0438\u0441\u0430\u043d\u0438\u044f \u041a\u041f.</p>';
+  if(pre>0) html += '<p style="font-size:9.5pt;line-height:1.7;padding-left:8px">\u2022 <b>\u041f\u0440\u0435\u0434\u043e\u043f\u043b\u0430\u0442\u0430</b> \u2014 <b>' + fmtN(pre) + '</b> ' + CUR.word + ' \u0441 \u0434\u0430\u0442\u044b \u043f\u043e\u0434\u043f\u0438\u0441\u0430\u043d\u0438\u044f \u041a\u041f.</p>';
   for(var i=1;i<=n;i++){
     var amt = (i===n) ? rem - per*(n-1) : per;
     var d   = days * i;
     var ord = ORD[i] || (i+'-й');
-    html += '<p style="font-size:9.5pt;line-height:1.7;padding-left:8px">\u2022 <b>' + ord + ' \u043f\u043b\u0430\u0442\u0451\u0436</b> \u2014 <b>' + fmtN(amt) + '</b> \u0442\u0435\u043d\u0433\u0435 \u0432 \u0442\u0435\u0447\u0435\u043d\u0438\u0435 ' + d + ' \u0434\u043d\u0435\u0439.</p>';
+    html += '<p style="font-size:9.5pt;line-height:1.7;padding-left:8px">\u2022 <b>' + ord + ' \u043f\u043b\u0430\u0442\u0451\u0436</b> \u2014 <b>' + fmtN(amt) + '</b> ' + CUR.word + ' \u0432 \u0442\u0435\u0447\u0435\u043d\u0438\u0435 ' + d + ' \u0434\u043d\u0435\u0439.</p>';
   }
   if(!html) html = '<p style="color:#aaa;font-size:9pt">\u0417\u0430\u043f\u043e\u043b\u043d\u0438\u0442\u0435 \u043f\u0430\u0440\u0430\u043c\u0435\u0442\u0440\u044b \u0432 \u043f\u0430\u043d\u0435\u043b\u0438</p>';
   wrap.innerHTML = html;
