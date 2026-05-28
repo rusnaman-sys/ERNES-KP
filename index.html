@@ -118,6 +118,7 @@ body{background:#c8c8c8;font-family:'Times New Roman',serif;font-size:10pt;color
   .pay-blk{display:none!important}
   .pay-blk.on{display:block!important}
   .cs-inst-hide{display:none!important}
+  .cs-note-hide{display:none!important}
   .stamp{print-color-adjust:exact;-webkit-print-color-adjust:exact}
 }
 </style>
@@ -386,6 +387,11 @@ body{background:#c8c8c8;font-family:'Times New Roman',serif;font-size:10pt;color
       <span class="f" contenteditable="true" data-bind="valid" data-ph="ДД.ММ.ГГГГ"></span>г.</div>
   </div>
 
+  <div class="cs" id="cs-note">
+    <div class="cs-h">Примечание:</div>
+    <div class="cs-b"><span class="f" contenteditable="true" data-bind="note" data-ph="Оставьте пустым — блок скроется при печати"></span></div>
+  </div>
+
   <div class="sig-wr">
     <div style="font-size:9.5pt;line-height:1.8">С уважением,<br>
       <span class="f" contenteditable="true" data-bind="manager" data-ph="ФИО менеджера" style="font-size:10.5pt;min-width:120px"></span>
@@ -437,7 +443,7 @@ function syncBind(key){
       el.classList.toggle('ok', val.trim().length > 0);
     }
   }
-  if(key==='install') updInst();
+  if(key==='install'||key==='note') updInst();
   updProgress();
 }
 function syncAll(){ for(var k in S) syncBind(k); }
@@ -463,7 +469,7 @@ document.body.addEventListener('input', function(e){
         o.classList.toggle('ok', val.trim().length>0);
       }
     }
-    if(key==='install') updInst();
+    if(key==='install'||key==='note') updInst();
     if(key==='rate'||key==='pp'||key==='sched-pre'||key==='sched-days') calcTot();
     updProgress();
   }
@@ -713,6 +719,9 @@ function updInst(){
   var v = (S['install']||'').trim();
   var sec = g('cs-inst');
   if(sec) sec.classList.toggle('cs-inst-hide', v==='');
+  var n = (S['note']||'').trim();
+  var nsec = g('cs-note');
+  if(nsec) nsec.classList.toggle('cs-note-hide', n==='');
 }
 
 // Прогресс
