@@ -337,7 +337,9 @@ body{background:#c8c8c8;font-family:'Times New Roman',serif;font-size:10pt;color
 
   <div class="cs">
     <div class="cs-h">Условия оплаты:</div>
-    <div class="cs-b">Цена указано в <span class="cur-cap">Тенге</span> по курсу Нац Банка Р.К курс Дол 1$=<span class="f" contenteditable="true" data-bind="rate" data-ph="470">470</span>KZT. При изменение курса на боле или мене на 5% стороны имеют право пересмотреть свои цены.</div>
+    <div class="cs-b cur-note" data-cur="KZT">Цена указана в Тенге по курсу Нац Банка Р.К курс Дол 1$=<span class="f" contenteditable="true" data-bind="rate" data-ph="470">470</span>KZT. При изменении курса более или менее чем на 5% стороны имеют право пересмотреть свои цены.</div>
+    <div class="cs-b cur-note" data-cur="USD" contenteditable="true" style="display:none">Цена в спецификации указана в долларах США. На момент заключения договора стоимость подлежит конвертации и перерасчёту в тенге по официальному курсу Национального Банка Республики Казахстан, действующему на дату заключения договора. Счёт выставляется в тенге.</div>
+    <div class="cs-b cur-note" data-cur="EUR" contenteditable="true" style="display:none">Цена в спецификации указана в евро. На момент заключения договора стоимость подлежит конвертации и перерасчёту в тенге по официальному курсу Национального Банка Республики Казахстан, действующему на дату заключения договора. Счёт выставляется в тенге.</div>
     <div style="margin-top:5px">
       <div class="pay-sw">
         <button class="act" id="d-b-full"  onclick="swPay('full')">100% предоплата</button>
@@ -521,6 +523,9 @@ function applyCurrency(code){
   var sel = g('ep-cur'); if(sel) sel.value = code;
   document.querySelectorAll('.cur-w').forEach(function(e){ e.textContent = CUR.word; });
   document.querySelectorAll('.cur-cap').forEach(function(e){ e.textContent = CUR.cap; });
+  document.querySelectorAll('.cur-note').forEach(function(e){
+    e.style.display = (e.getAttribute('data-cur') === code) ? '' : 'none';
+  });
   calcTot();
 }
 
